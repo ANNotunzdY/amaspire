@@ -7,12 +7,12 @@
     <Nullable>enable</Nullable>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>amaspire</ToolCommandName>
-    <PackageId>amaspire</PackageId>
+    <PackageId>Amaspire</PackageId>
     <Version>0.1.0</Version>
-    <Authors>amaspire contributors</Authors>
+    <Authors>Takayoshi Katsuki</Authors>
     <Description>Generate AWS CloudFormation templates from .NET Aspire manifests</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/YOUR_ORG/amaspire</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ANNotunzdY/amaspire</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
