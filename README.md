@@ -21,7 +21,7 @@ Generate production-ready AWS CloudFormation YAML templates from .NET Aspire man
 ### Install as .NET Global Tool
 
 ```bash
-dotnet tool install -g amaspire
+dotnet tool install -g Amaspire
 ```
 
 After installation, ensure .NET tools are in your PATH:
