@@ -1,0 +1,11 @@
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+*.nupkg
+artifacts/
+cfn-output/
+test-output/

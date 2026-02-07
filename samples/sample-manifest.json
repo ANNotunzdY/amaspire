@@ -1,0 +1,36 @@
+{
+  "resources": {
+    "apiservice": {
+      "type": "project.v0",
+      "image": "myapp-api",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4317"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "containerPort": 8080
+        }
+      }
+    },
+    "webfrontend": {
+      "type": "project.v0",
+      "image": "myapp-web",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "ApiService__Endpoint": "http://apiservice:8080"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "containerPort": 8080
+        }
+      }
+    }
+  }
+}

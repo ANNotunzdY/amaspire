@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Restore
+      run: dotnet restore src/amaspire.csproj
+    
+    - name: Build
+      run: dotnet build src/amaspire.csproj --no-restore
+    
+    - name: Test
+      run: dotnet test tests/amaspire.Tests.csproj --no-build --verbosity normal
+    
+    - name: Pack
+      run: dotnet pack src/amaspire.csproj --no-build -o ./artifacts
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-package
+        path: ./artifacts/*.nupkg
+
+  validate-templates:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Install tool
+      run: dotnet tool install --global --add-source ./artifacts amaspire
+    
+    - name: Generate templates
+      run: |
+        amaspire generate \
+          --manifest ./samples/sample-manifest.json \
+          --output ./cfn-output \
+          --env test
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    
+    - name: Install cfn-lint
+      run: pip install cfn-lint
+    
+    - name: Validate templates
+      run: cfn-lint ./cfn-output/*.yaml
